@@ -7,6 +7,17 @@ from extractor       import parse_financial_data
 
 app = FastAPI(title="Financial Extractor API", version="3.0")
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "https://finalversionv2.vercel.app",   # your Vercel frontend
+        "http://localhost:3000",                # local dev
+        "http://localhost:5500",                # VS Code Live Server
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 def _save(file: UploadFile) -> str:
     with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp:
